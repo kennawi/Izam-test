@@ -7,8 +7,9 @@ export async function trackMenuOrder(
   from: string,
   to: string
 ): Promise<string | void> {
+  const url = process.env.NEXT_PUBLIC_API_URL + "/track";
   try {
-    await fetchData("http://localhost:8081/track", {
+    await fetchData(url, {
       method: "POST",
       body: JSON.stringify({ id, from, to }),
     });

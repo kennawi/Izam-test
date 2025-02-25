@@ -10,6 +10,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import NaveList from "@/components/navigation/NaveList";
 import { fetchData } from "@/utils/fetchData";
 import { Menu } from "@/types/menuTypes";
+import getNavItems from "@/utils/getNavItems";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const itemData: Menu[] = await fetchData("http://localhost:8081/nav");
+  const itemData: Menu[] = await getNavItems();
 
   return (
     <html lang="en">
