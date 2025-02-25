@@ -8,7 +8,6 @@ import { Box, CssBaseline } from "@mui/material";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import NaveList from "@/components/navigation/NaveList";
-import { fetchData } from "@/utils/fetchData";
 import { Menu } from "@/types/menuTypes";
 import getNavItems from "@/utils/getNavItems";
 
