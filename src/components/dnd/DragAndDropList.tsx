@@ -1,12 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import DndContainer from "./DndContainer";
-import NavItem from "../navigation/NavItem";
 import { Box, Collapse } from "@mui/material";
 import { trackMenuOrder } from "@/actions/trackMenuOrder";
 import { arrayMove } from "@dnd-kit/sortable";
 import { DragEndEvent } from "@dnd-kit/core";
 import { Menu } from "@/types/menuTypes";
+import DndContainer from "./DndContainer";
+import NavItem from "../navigation/NavItem";
+import toast from "react-hot-toast";
 
 interface DragAndDropListProps {
   menuItems: Menu[];
@@ -131,15 +132,34 @@ export default function DragAndDropList({
 
       return updatedList;
     });
-    const oldIndex = menuItems
-      .findIndex((item) => item.id === active.id)
-      .toString();
-    const newIndex = menuItems
-      .findIndex((item) => item.id === over.id)
-      .toString();
+    try {
+      const result = await trackMenuOrder(
+        active.id.toString(),
+        active.id.toString(),
+        over.id.toString()
+      );
 
-    await trackMenuOrder(active.id.toString(), oldIndex, newIndex);
+      if (
+        typeof result === "object" &&
+        result !== null &&
+        "success" in result
+      ) {
+        if (result.success) {
+          // Exit edit mode on success
+          toast.success(result.message); // Show success message
+        } else {
+          toast.error(result.message); // Show error message
+        }
+      } else {
+        toast.error("❌ Unexpected response from server.");
+      }
+    } catch (error) {
+      console.error("❌ Failed to save order:", error);
+
+      toast.error("❌ Something went wrong. Please try again.");
+    }
   }
+
   return (
     <DndContainer
       onDragEnd={onDragEnd}

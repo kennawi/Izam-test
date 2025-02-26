@@ -12,7 +12,16 @@ export async function fetchData<T>(
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch data: ${response.status}`);
+      let errorMessage = `Failed to fetch data: ${response.status}`;
+
+      if (response.status === 400) {
+        errorMessage = "Bad Request: Invalid input.";
+      } else if (response.status === 500) {
+        errorMessage = "Server Error: Please try again later.";
+      }
+
+      console.error(errorMessage);
+      throw new Error(errorMessage);
     }
     // Handle empty response
     const text = await response.text();
@@ -20,12 +29,16 @@ export async function fetchData<T>(
       console.warn("Received empty response");
       return {} as T; // Return an empty object instead of parsing
     }
-
-    const data = JSON.parse(text);
-    // console.log("Fetched data:", data);
-    return data as Promise<T>;
+    // Ensure response is valid JSON
+    try {
+      const jsonData = JSON.parse(text);
+      return jsonData as T;
+    } catch (parseError) {
+      console.error("❌ JSON parse error:", parseError);
+      throw new Error("Invalid JSON response from server.");
+    }
   } catch (error) {
-    console.error("Fetch error:", error);
-    throw error;
+    console.error("❌ Fetch error:", error);
+    throw new Error("Network error: Failed to connect to the server.");
   }
 }

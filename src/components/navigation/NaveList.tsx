@@ -14,8 +14,10 @@ import { saveMenuOrder } from "@/actions/saveMenuOrder";
 import { useMenuStore } from "@/lib/store";
 
 import MenuActions from "./MenuActions";
-import DragAndDropList from "../dnd/DragAndDropList";
+// import DragAndDropList from "../DragAndDropList";
 import { Menu } from "@/types/menuTypes";
+import toast from "react-hot-toast";
+import DragAndDropList from "../dnd/DragAndDropList";
 
 interface NaveListProps {
   data: Menu[]; // Replace 'any' with the appropriate type if known
@@ -34,11 +36,26 @@ export default function NaveList({ data }: NaveListProps) {
   /** Saves new menu order */
   async function saveNewOrder() {
     try {
-      await saveMenuOrder(menuItems);
-      setIsEditMode(false);
+      const result = await saveMenuOrder(menuItems);
+
+      if (
+        typeof result === "object" &&
+        result !== null &&
+        "success" in result
+      ) {
+        if (result.success) {
+          setIsEditMode(false); // Exit edit mode on success
+          toast.success(result.message); // Show success message
+        } else {
+          toast.error(result.message); // Show error message
+        }
+      } else {
+        toast.error("❌ Unexpected response from server.");
+      }
     } catch (error) {
-      console.error("Failed to save order:", error);
-    } finally {
+      console.error("❌ Failed to save order:", error);
+
+      toast.error("❌ Something went wrong. Please try again.");
     }
   }
 

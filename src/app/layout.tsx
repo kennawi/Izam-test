@@ -10,6 +10,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import NaveList from "@/components/navigation/NaveList";
 import { Menu } from "@/types/menuTypes";
 import getNavItems from "@/utils/getNavItems";
+import { Toaster } from "react-hot-toast";
 // import getNavItems from "@/utils/getNavItems";
 
 const geistSans = Geist({
@@ -40,6 +41,7 @@ export default async function RootLayout({
         <AppRouterCacheProvider>
           <CssBaseline />
           <ThemeProvider theme={theme}>
+            <Toaster />
             <Box sx={{ display: "flex", minHeight: "100vh", width: "100%" }}>
               <Navbar />
               <Sidebar>
