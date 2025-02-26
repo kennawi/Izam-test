@@ -7,7 +7,7 @@ export async function trackMenuOrder(
   from: string,
   to: string
 ): Promise<string | void> {
-  const url = process.env.NEXT_PUBLIC_API_URL + "/track" || "/api/track";
+  const url = process.env.API_URL + "/track" || "/api/track";
   try {
     await fetchData(url, {
       method: "POST",
