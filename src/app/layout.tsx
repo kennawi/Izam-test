@@ -10,6 +10,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import NaveList from "@/components/navigation/NaveList";
 import { Menu } from "@/types/menuTypes";
 import getNavItems from "@/utils/getNavItems";
+// import getNavItems from "@/utils/getNavItems";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

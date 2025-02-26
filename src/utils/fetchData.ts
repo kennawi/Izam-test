@@ -12,7 +12,7 @@ export async function fetchData<T>(
     });
 
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      console.error(`Failed to fetch data: ${response.status}`);
     }
     // Handle empty response
     const text = await response.text();

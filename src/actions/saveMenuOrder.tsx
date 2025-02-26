@@ -6,7 +6,7 @@ import { fetchData } from "@/utils/fetchData";
 export async function saveMenuOrder(
   newListOrderItem: Menu[]
 ): Promise<string | void> {
-  const url = process.env.NEXT_PUBLIC_API_URL + "/nav";
+  const url = process.env.NEXT_PUBLIC_API_URL + "/nav" || "/api/nav";
   try {
     await fetchData(url, {
       method: "POST",

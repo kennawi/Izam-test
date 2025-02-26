@@ -1,15 +1,11 @@
 import * as React from "react";
 import { Box, Stack } from "@mui/material";
 import SortBy from "@/components/jobs/SortBy";
-import { fetchData } from "@/utils/fetchData";
 import JobList from "@/components/jobs/JobList";
 import JobBanner from "@/components/jobs/JobBanner";
 import MobileAction from "@/components/jobs/MobileAction";
 
 export default async function Home() {
-  const itemData = await fetchData("http://localhost:8081/nav");
-  console.log(itemData, "ItemData");
-
   return (
     <Box
       component="main"
