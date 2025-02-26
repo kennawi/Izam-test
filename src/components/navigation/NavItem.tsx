@@ -109,6 +109,7 @@ export default function NavItem({
                         opacity: !!item.visible ? 0.5 : 1,
                         fontSize: "25px",
                         color: "#404040",
+                        "&:hover": { color: "#2f7d31" },
                       }}
                     >
                       {item.title}
